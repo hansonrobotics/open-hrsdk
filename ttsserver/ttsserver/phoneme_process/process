@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -e
+BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+
+show_help() {
+cat << EOF
+Usage: $0 <wav file> <timing file>
+
+Generate the phonemes according to the audio in the wave file
+EOF
+}
+
+if [[ $# < 2 ]]; then
+    show_help
+    exit 0
+fi
+
+wav_file=$1
+output_file=$2
+
+$BASEDIR/rhubarb -f json -r phonetic -o /tmp/o.json $wav_file
+python $BASEDIR/convert.py -i /tmp/o.json -o $output_file
+echo "Generated $output_file"

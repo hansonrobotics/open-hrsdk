@@ -1,0 +1,13 @@
+services:
+  ttsserver:
+    build: .
+    environment:
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
+    - AWS_REGION_NAME
+    - FLASK_ENV=production
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    command: /opt/hansonrobotics/py3env/bin/python /ttsserver/app/main.py --host 0.0.0.0 --port 10002 --voice_paths /ttsserver/voices
+    ports:
+    - 10002:10002
