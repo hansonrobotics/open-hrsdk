@@ -1,0 +1,9 @@
+string node
+int32 level
+int32 level_priority
+float64 weight
+string[] languages
+int32 ttl
+---
+bool success
+string message

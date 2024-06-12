@@ -1,0 +1,10 @@
+std_msgs/Header header
+string id
+geometry_msgs/Pose left_gaze
+geometry_msgs/Pose right_gaze
+geometry_msgs/Vector3 gaze_angle
+geometry_msgs/Point location
+geometry_msgs/Pose head_pose
+geometry_msgs/Point[] landmarks
+hr_msgs/FacialActionUnit[] action_units
+sensor_msgs/RegionOfInterest bounding_box

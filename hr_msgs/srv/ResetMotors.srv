@@ -1,0 +1,3 @@
+# names of motors to reset
+string[] names
+---

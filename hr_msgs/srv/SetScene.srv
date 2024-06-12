@@ -1,0 +1,4 @@
+string scene
+---
+bool success
+string message

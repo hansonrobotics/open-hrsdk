@@ -1,0 +1,7 @@
+string text
+string lang
+string session
+---
+int32 state
+string answer
+float64 score

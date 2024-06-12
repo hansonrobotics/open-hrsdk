@@ -1,0 +1,7 @@
+string text
+string lang
+string request_id
+string agent_id
+---
+bool success
+string message

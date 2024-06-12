@@ -1,0 +1,6 @@
+string text
+string session
+string lang
+string context
+---
+string response

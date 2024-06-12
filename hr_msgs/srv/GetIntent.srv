@@ -1,0 +1,5 @@
+string text
+string lang
+---
+string intent
+float64 confidence

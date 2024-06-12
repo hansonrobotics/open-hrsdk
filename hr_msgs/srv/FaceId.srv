@@ -1,0 +1,5 @@
+sensor_msgs/Image image
+sensor_msgs/RegionOfInterest roi
+geometry_msgs/Point[] landmarks
+---
+string                face_id
