@@ -54,7 +54,7 @@ RUN /opt/hansonrobotics/py3env/bin/python -m pip install \
     "typing_extensions"
 
 RUN /opt/hansonrobotics/py3env/bin/python -m pip install \
-    "azure-cognitiveservices-speech==1.17.0" \
+    "azure-cognitiveservices-speech>=1.17.0,<2.0" \
     "boto3" \
     "bs4" \
     "coloredlogs>=14.0" \
