@@ -21,15 +21,13 @@ import os
 import shutil
 import subprocess
 import tempfile
-import xml.etree.ElementTree as ET
 from collections import defaultdict
 from contextlib import closing
 
-from boto3 import Session
+import boto3
 from botocore.exceptions import BotoCoreError, ClientError
 from bs4 import BeautifulSoup
 
-from ttsserver.ttsbase import has_html_tag
 from ttsserver.action_parser import ActionParser
 from ttsserver.ttsbase import TTSBase, strip_xmltag, wrap_speak_tag
 
@@ -37,10 +35,11 @@ logger = logging.getLogger("hr.ttsserver.voices.polly")
 
 
 class PollyTTS(TTSBase):
+    VENDOR = "polly"
     AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
     POLLY_NEURAL_VOICE_ENABLE = os.environ.get("POLLY_NEURAL_VOICE_ENABLE", "1")
-    AWS_REGION_NAME = "us-west-2"
+    AWS_TTS_REGION_NAME = os.environ.get("AWS_TTS_REGION_NAME", "us-west-2")
     # http://docs.aws.amazon.com/polly/latest/dg/voicelist.html
     ARABIC = ["Zeina"]
     CHINESE_MANDARIN = ["Zhiyu"]
@@ -53,15 +52,19 @@ class PollyTTS(TTSBase):
     English_New_Zealand = ["Aria"]
     English_South_African = ["Ayanda"]
     ENGLISH_US = [
+        "Danielle",
+        "Gregory",
         "Ivy",
         "Joanna",
         "Joey",
         "Justin",
-        "Kevin",
         "Kendra",
+        "Kevin",
         "Kimberly",
         "Matthew",
+        "Ruth",
         "Salli",
+        "Stephen",
     ]
     ENGLISH_WELSH = ["Geraint"]
     FRENCH_FRENCH = ["Celine", "Lea", "Mathieu"]
@@ -145,19 +148,17 @@ class PollyTTS(TTSBase):
         super(PollyTTS, self).__init__()
         self.voice = voice
         self.ssml = ssml
-        self.tts_params = {}
-        self.tts_params["voice"] = self.voice
-        self.parser = ActionParser("polly")
-        self.voice_id = "polly:%s" % self.voice
+        self._default_tts_params["voice"] = self.voice
+        self.parser = ActionParser(self.VENDOR)
         self.get_polly()
 
     def get_polly(self):
-        session = Session(
-            self.AWS_ACCESS_KEY_ID,
-            self.AWS_SECRET_ACCESS_KEY,
-            region_name=self.AWS_REGION_NAME,
+        self.polly = boto3.client(
+            self.VENDOR,
+            region_name=self.AWS_TTS_REGION_NAME,
+            aws_access_key_id=self.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=self.AWS_SECRET_ACCESS_KEY,
         )
-        self.polly = session.client("polly")
 
     def get_engine(self):
         engine = "standard"
@@ -294,11 +295,11 @@ def load_voices():
             continue
         try:
             api = PollyTTS(voice=voice, ssml=True)
-            voices["polly"][voice] = api
+            voices[PollyTTS.VENDOR][voice] = api
         except Exception as ex:
             logger.error(ex)
             break
-    logger.info("Added voices: %s" % ", ".join(list(voices["polly"].keys())))
+    logger.info("Added voices: %s" % ", ".join(list(voices[PollyTTS.VENDOR].keys())))
     return voices
 
 

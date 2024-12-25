@@ -68,7 +68,8 @@ RUN /opt/hansonrobotics/py3env/bin/python -m pip install \
     "scipy" \
     "sox>=1.2.9" \
     "urllib3>1.25.4" \
-    "websocket-client==1.2.1"
+    "websocket-client==1.2.1" \
+    "elevenlabs>=1.13.3,<2"
 
 WORKDIR /ttsserver
 COPY --from=open-hrsdk /open-hrsdk/ttsserver /ttsserver

@@ -132,7 +132,7 @@ class MarkPattern(Pattern):
         self.setting = setting
 
     def get_nodes(self, match):
-        if self.setting in ["snet", "acapela"]:
+        if self.setting in ["snet", "acapela", "elevenlabs"]:
             return [""]
         name = match.group(3)
         name = name.strip()

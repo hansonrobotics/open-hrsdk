@@ -20,8 +20,6 @@ import logging
 import os
 import shutil
 import subprocess
-import uuid
-import xml.etree.ElementTree as ET
 import zipfile
 from collections import defaultdict
 
@@ -34,6 +32,7 @@ logger = logging.getLogger("hr.ttsserver.voices.acapela")
 
 
 class AcapelaTTS(TTSBase):
+    VENDOR = "acapela"
 
     NEURAL_VOICES = [
         "Jalal22k_NT",
@@ -232,7 +231,7 @@ class AcapelaTTS(TTSBase):
         self.ssml = ssml
 
         # Parameter reference https://www.acapela-cloud.com/docs/
-        self.tts_params = {
+        self._default_tts_params = {
             "voice": self.voice,
             "mouthpos": "on",
             "wordpos": "on",
@@ -240,15 +239,14 @@ class AcapelaTTS(TTSBase):
             "type": "mp3",
         }
         if self.voice == "WillOldMan22k_HQ":
-            self.tts_params["speed"] = 125
+            self._default_tts_params["speed"] = 125
         if self.voice in ["Ella22k_NT", "Ella22k_HQ"]:
-            self.tts_params["speed"] = 90
-            self.tts_params["shaping"] = 105
+            self._default_tts_params["speed"] = 90
+            self._default_tts_params["shaping"] = 105
 
-        self.parser = ActionParser("acapela")
+        self.parser = ActionParser(self.VENDOR)
         self.url = "https://www.acapela-cloud.com/api"
         self.token = None
-        self.voice_id = "acapela:%s" % self.voice
 
     def get_token(self):
         ACAPELA_ACCOUNT = os.environ.get("ACAPELA_ACCOUNT")
@@ -393,11 +391,11 @@ def load_voices():
             continue
         try:
             api = AcapelaTTS(voice=voice, ssml=False)
-            voices["acapela"][voice] = api
+            voices[AcapelaTTS.VENDOR][voice] = api
         except Exception as ex:
             logger.exception(ex)
             break
-    logger.info("Added voices: %s" % ", ".join(list(voices["acapela"].keys())))
+    logger.info("Added voices: %s" % ", ".join(list(voices[AcapelaTTS.VENDOR].keys())))
     return voices
 
 

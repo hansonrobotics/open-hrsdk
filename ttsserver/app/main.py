@@ -17,13 +17,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-import datetime as dt
 import logging
 import os
-import subprocess
 import sys
-import xml.etree.ElementTree as ET
-from pathlib import Path
 
 CWD = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(CWD, ".."))
@@ -31,13 +27,15 @@ sys.path.insert(0, os.path.join(CWD, ".."))
 import base64
 import json
 import shutil
-import wave
+from pathlib import Path
 
 import coloredlogs
 import yaml
 from flask import Flask, Response, request
 from ttsserver.viseme import VisemeMapper
 from werkzeug.datastructures import Headers
+
+from ttsserver.ttsbase import TTSBase
 
 if "coloredlogs" in sys.modules and os.isatty(2):
     formatter_str = "%(asctime)s %(levelname)-7s %(name)s: %(message)s"
@@ -64,6 +62,7 @@ viseme_mapping = {
     "azure:*": "azure:azure",
     "acapela:*": "acapela:cereproc",
     "singing:*": "azure:azure",
+    "elevenlabs:*": "azure:azure",
 }
 
 
@@ -93,10 +92,26 @@ def load_voices(voice_paths):
 def get_api(vendor, voice):
     api = None
     try:
-        api = VOICES.get(vendor).get(voice)
+        config = VOICES.get(vendor)
+        if isinstance(config, dict):
+            api = config.get(voice)
+        else:
+            api = config
     except Exception as ex:
         logger.exception(ex)
     return api
+
+
+def copy_files_and_directories(src, dest):
+    if not os.path.exists(dest):
+        os.makedirs(dest)
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dest, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, dirs_exist_ok=True)
+        else:
+            shutil.copy2(s, d)
 
 
 @app.route("/<vendor>")
@@ -106,7 +121,7 @@ def _tts(vendor):
     text = request.args.get("text")
     format = request.args.get("format", "wav")  # wav or mp3
     params = request.args.to_dict()
-    for p in ["voice", "text", "vmap", "vparam"]:
+    for p in ["text", "vmap", "vparam"]:
         if p in params:
             params.pop(p)
     response = {}
@@ -200,11 +215,21 @@ def main(args):
     if len(VOICES) == 0:
         logger.warning("No any voice is loaded")
 
-    for name, engine in list(VOICES.items()):
-        for voice in list(engine.values()):
-            voice.set_output_dir(os.path.join(tts_output_dir, name))
-            if voice.voice == "singing" and HR_SINGING_DIR:
-                voice.set_output_dir(os.path.expanduser(HR_SINGING_DIR))
+    for vendor, voice_config in list(VOICES.items()):
+        output_dir = os.path.join(tts_output_dir, vendor)
+        if isinstance(voice_config, TTSBase):
+            voice_config.set_output_dir(output_dir)
+        else:
+            for voice in list(voice_config.values()):
+                voice.set_output_dir(output_dir)
+                if (
+                    voice.voice == "singing"
+                    and HR_SINGING_DIR
+                    and os.path.isdir(HR_SINGING_DIR)
+                    and HR_SINGING_DIR != voice.cache_dir
+                ):
+                    logger.info("Copy singing files")
+                    copy_files_and_directories(HR_SINGING_DIR, voice.cache_dir)
 
     cert_file = os.environ.get("SSL_CERT_FILE")
     privkey_file = os.environ.get("SSL_PRIVATE_KEY_FILE")

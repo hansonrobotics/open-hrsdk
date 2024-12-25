@@ -20,9 +20,9 @@ import logging
 import os
 import re
 import shutil
-import subprocess
 import uuid
 import xml.etree.ElementTree as ET
+from collections import ChainMap
 
 import sox
 from bs4 import BeautifulSoup
@@ -31,6 +31,9 @@ from slugify import slugify
 from ttsserver.auto_emphasis import auto_emphasis
 
 logger = logging.getLogger("hr.ttsserver.ttsbase")
+
+ILLEGAL_CHARS = re.compile(r"""[/]""")
+
 
 def get_duration(audio_file):
     try:
@@ -70,10 +73,6 @@ def is_ssml(text):
             return False
     except Exception:
         return False
-
-
-def has_html_tag(text):
-    return bool(re.search(r"<(\w+).*>.*</\1>", text))
 
 
 def strip_xmltag(text):
@@ -137,8 +136,13 @@ class TTSBase(object):
         self.output_dir = "."
         self.cache_dir = os.path.expanduser("{}/cache".format(self.output_dir))
         self.emo_cache_dir = os.path.expanduser("{}/emo_cache".format(self.output_dir))
-        self.tts_params = {}
-        self.voice_id = ""
+        self._default_tts_params = {}
+        self._dynamic_tts_params = {}
+        self.tts_params = ChainMap(self._dynamic_tts_params, self._default_tts_params)
+
+    @property
+    def voice_id(self):
+        return "%s:%s" % (self.VENDOR, self.voice)
 
     def set_output_dir(self, output_dir):
         self.output_dir = os.path.expanduser(output_dir)
@@ -152,11 +156,11 @@ class TTSBase(object):
             os.makedirs(self.emo_cache_dir)
 
     def get_tts_params(self):
-        return self.tts_params
+        return dict(self.tts_params)
 
     def set_tts_params(self, **params):
         if params:
-            self.tts_params.update(params)
+            self._dynamic_tts_params.update(params)
 
     def get_emo_cache_file(self, text, params):
         data = (
@@ -167,11 +171,11 @@ class TTSBase(object):
         filename = os.path.join(self.emo_cache_dir, hashcode + ".wav")
         return filename
 
-    def get_tts_id(self, text, tts_params):
-        if tts_params and "id" in tts_params:
-            return tts_params["id"]
+    def get_tts_id(self, text):
+        if self.tts_params and "id" in self.tts_params:
+            return self.tts_params["id"]
         text = text.replace("|p|", "").strip()  # remove |p| in the text
-        data = text.lower() + str(self.voice_id) + str(tts_params)
+        data = text.lower() + str(self.voice_id) + str(self.get_tts_params())
         data = data.encode("utf-8")
         suffix = hashlib.sha1(data).hexdigest()[:6]
         text = strip_xmltag(text)
@@ -238,10 +242,10 @@ class TTSBase(object):
     def do_tts(self, tts_data):
         raise NotImplementedError("do_tts is not implemented")
 
-    def _adjust_phonemes_timing(self, phonemes, ratio):
+    def _adjust_phonemes_timing(self, phonemes, ratio, shift=0):
         for p in phonemes:
-            p["start"] = p["start"] * ratio
-            p["end"] = p["end"] * ratio
+            p["start"] = max(0, p["start"] * ratio + shift)
+            p["end"] = max(0, p["end"] * ratio + shift)
 
     def tts(self, text, wavout=None, **kwargs):
         format = kwargs.get("format", "wav")
@@ -251,11 +255,13 @@ class TTSBase(object):
         if not is_ssml(text):
             text = auto_emphasis(text)
         tts_data = TTSData(text, wavout, format)
-        tts_params = self.get_tts_params() or {}
+
+        # Clear any previous dynamic params and update with new kwargs
+        self._dynamic_tts_params.clear()
         if kwargs:
-            # do not override initial TTS params
-            tts_params.update(**kwargs)
-        tts_data.id = self.get_tts_id(text, tts_params)
+            self._dynamic_tts_params.update(kwargs)
+
+        tts_data.id = self.get_tts_id(text)
         self.do_tts(tts_data)
         return tts_data
 

@@ -33,14 +33,12 @@ logger = logging.getLogger("hr.ttsserver.voices.azure")
 
 
 class AzureTTS(TTSBase):
+    VENDOR = "azure"
+
     # Sets the synthesis voice name.
     # The full list of supported voices can be found here:
     # https://docs.microsoft.com/azure/cognitive-services/speech-service/language-support#text-to-speech
     # https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#prebuilt-neural-voices
-    KOREAN = ["ko-KR-InJoonNeural", "ko-KR-SunHiNeural"]
-    CHINESE_CANTONESE = ["zh-HK-HiuGaaiNeural", "zh-HK-HiuMaanNeural"]
-    ENGLISH = ["en-US-SaraNeural"]
-    CZECH = ["cs-CZ-AntoninNeural", "cs-CZ-VlastaNeural"]
     ALL = [
         "af-ZA-AdriNeural",
         "af-ZA-WillemNeural",
@@ -106,6 +104,7 @@ class AzureTTS(TTSBase):
         "de-DE-ChristophNeural",
         "de-DE-ConradNeural",
         "de-DE-ElkeNeural",
+        "de-DE-FlorianMultilingualNeural",
         "de-DE-GiselaNeural",
         "de-DE-KasperNeural",
         "de-DE-KatjaNeural",
@@ -115,6 +114,7 @@ class AzureTTS(TTSBase):
         "de-DE-LouisaNeural",
         "de-DE-MajaNeural",
         "de-DE-RalfNeural",
+        "de-DE-SeraphinaMultilingualNeural",
         "de-DE-TanjaNeural",
         "el-GR-AthinaNeural",
         "el-GR-NestorasNeural",
@@ -135,6 +135,7 @@ class AzureTTS(TTSBase):
         "en-CA-ClaraNeural",
         "en-CA-LiamNeural",
         "en-GB-AbbiNeural",
+        "en-GB-AdaMultilingualNeural",
         "en-GB-AlfieNeural",
         "en-GB-BellaNeural",
         "en-GB-ElliotNeural",
@@ -145,6 +146,7 @@ class AzureTTS(TTSBase):
         "en-GB-NoahNeural",
         "en-GB-OliverNeural",
         "en-GB-OliviaNeural",
+        "en-GB-OllieMultilingualNeural",
         "en-GB-RyanNeural",
         "en-GB-SoniaNeural",
         "en-GB-ThomasNeural",
@@ -167,27 +169,51 @@ class AzureTTS(TTSBase):
         "en-TZ-ElimuNeural",
         "en-TZ-ImaniNeural",
         "en-US-AIGenerateNeural",
+        "en-US-AlloyMultilingualNeural",
+        "en-US-AlloyMultilingualNeuralHD",
         "en-US-AmberNeural",
         "en-US-AnaNeural",
+        "en-US-AndrewMultilingualNeural",
+        "en-US-AndrewNeural",
         "en-US-AriaNeural",
         "en-US-AshleyNeural",
+        "en-US-AvaMultilingualNeural",
+        "en-US-AvaNeural",
+        "en-US-BlueNeural",
         "en-US-BrandonNeural",
+        "en-US-BrianMultilingualNeural",
+        "en-US-BrianNeural",
         "en-US-ChristopherNeural",
         "en-US-CoraNeural",
         "en-US-DavisNeural",
+        "en-US-EchoMultilingualNeural",
+        "en-US-EchoMultilingualNeuralHD",
         "en-US-ElizabethNeural",
+        "en-US-EmmaMultilingualNeural",
+        "en-US-EmmaNeural",
         "en-US-EricNeural",
+        "en-US-FableMultilingualNeural",
+        "en-US-FableMultilingualNeuralHD",
         "en-US-GuyNeural",
         "en-US-JacobNeural",
         "en-US-JaneNeural",
         "en-US-JasonNeural",
         "en-US-JennyMultilingualNeural",
         "en-US-JennyNeural",
+        "en-US-KaiNeural",
+        "en-US-LunaNeural",
         "en-US-MichelleNeural",
         "en-US-MonicaNeural",
         "en-US-NancyNeural",
+        "en-US-NovaMultilingualNeural",
+        "en-US-NovaMultilingualNeuralHD",
+        "en-US-OnyxMultilingualNeural",
+        "en-US-OnyxMultilingualNeuralHD",
         "en-US-RogerNeural",
+        "en-US-RyanMultilingualNeural",
         "en-US-SaraNeural",
+        "en-US-ShimmerMultilingualNeural",
+        "en-US-ShimmerMultilingualNeuralHD",
         "en-US-SteffanNeural",
         "en-US-TonyNeural",
         "en-ZA-LeahNeural",
@@ -210,12 +236,14 @@ class AzureTTS(TTSBase):
         "es-EC-LuisNeural",
         "es-ES-AbrilNeural",
         "es-ES-AlvaroNeural",
+        "es-ES-ArabellaMultilingualNeural",
         "es-ES-ArnauNeural",
         "es-ES-DarioNeural",
         "es-ES-EliasNeural",
         "es-ES-ElviraNeural",
         "es-ES-EstrellaNeural",
         "es-ES-IreneNeural",
+        "es-ES-IsidoraMultilingualNeural",
         "es-ES-LaiaNeural",
         "es-ES-LiaNeural",
         "es-ES-NilNeural",
@@ -223,6 +251,7 @@ class AzureTTS(TTSBase):
         "es-ES-TeoNeural",
         "es-ES-TrianaNeural",
         "es-ES-VeraNeural",
+        "es-ES-XimenaNeural",
         "es-GQ-JavierNeural",
         "es-GQ-TeresaNeural",
         "es-GT-AndresNeural",
@@ -278,6 +307,7 @@ class AzureTTS(TTSBase):
         "fr-CA-AntoineNeural",
         "fr-CA-JeanNeural",
         "fr-CA-SylvieNeural",
+        "fr-CA-ThierryNeural",
         "fr-CH-ArianeNeural",
         "fr-CH-FabriceNeural",
         "fr-FR-AlainNeural",
@@ -292,6 +322,8 @@ class AzureTTS(TTSBase):
         "fr-FR-JeromeNeural",
         "fr-FR-JosephineNeural",
         "fr-FR-MauriceNeural",
+        "fr-FR-RemyMultilingualNeural",
+        "fr-FR-VivienneMultilingualNeural",
         "fr-FR-YvesNeural",
         "fr-FR-YvetteNeural",
         "ga-IE-ColmNeural",
@@ -314,6 +346,7 @@ class AzureTTS(TTSBase):
         "id-ID-GadisNeural",
         "is-IS-GudrunNeural",
         "is-IS-GunnarNeural",
+        "it-IT-AlessioMultilingualNeural",
         "it-IT-BenignoNeural",
         "it-IT-CalimeroNeural",
         "it-IT-CataldoNeural",
@@ -322,16 +355,20 @@ class AzureTTS(TTSBase):
         "it-IT-FabiolaNeural",
         "it-IT-FiammaNeural",
         "it-IT-GianniNeural",
+        "it-IT-GiuseppeNeural",
         "it-IT-ImeldaNeural",
         "it-IT-IrmaNeural",
+        "it-IT-IsabellaMultilingualNeural",
         "it-IT-IsabellaNeural",
         "it-IT-LisandroNeural",
+        "it-IT-MarcelloMultilingualNeural",
         "it-IT-PalmiraNeural",
         "it-IT-PierinaNeural",
         "it-IT-RinaldoNeural",
         "ja-JP-AoiNeural",
         "ja-JP-DaichiNeural",
         "ja-JP-KeitaNeural",
+        "ja-JP-MasaruMultilingualNeural",
         "ja-JP-MayuNeural",
         "ja-JP-NanamiNeural",
         "ja-JP-NaokiNeural",
@@ -348,6 +385,7 @@ class AzureTTS(TTSBase):
         "kn-IN-SapnaNeural",
         "ko-KR-BongJinNeural",
         "ko-KR-GookMinNeural",
+        "ko-KR-HyunsuNeural",
         "ko-KR-InJoonNeural",
         "ko-KR-JiMinNeural",
         "ko-KR-SeoHyeonNeural",
@@ -402,6 +440,8 @@ class AzureTTS(TTSBase):
         "pt-BR-LeticiaNeural",
         "pt-BR-ManuelaNeural",
         "pt-BR-NicolauNeural",
+        "pt-BR-ThalitaMultilingualNeural",
+        "pt-BR-ThalitaNeural",
         "pt-BR-ValerioNeural",
         "pt-BR-YaraNeural",
         "pt-PT-DuarteNeural",
@@ -422,6 +462,8 @@ class AzureTTS(TTSBase):
         "so-SO-UbaxNeural",
         "sq-AL-AnilaNeural",
         "sq-AL-IlirNeural",
+        "sr-Latn-RS-NicholasNeural",
+        "sr-Latn-RS-SophieNeural",
         "sr-RS-NicholasNeural",
         "sr-RS-SophieNeural",
         "su-ID-JajangNeural",
@@ -462,29 +504,37 @@ class AzureTTS(TTSBase):
         "wuu-CN-YunzheNeural",
         "yue-CN-XiaoMinNeural",
         "yue-CN-YunSongNeural",
+        "zh-CN-XiaochenMultilingualNeural",
         "zh-CN-XiaochenNeural",
         "zh-CN-XiaohanNeural",
         "zh-CN-XiaomengNeural",
         "zh-CN-XiaomoNeural",
         "zh-CN-XiaoqiuNeural",
+        "zh-CN-XiaorouNeural",
         "zh-CN-XiaoruiNeural",
         "zh-CN-XiaoshuangNeural",
+        "zh-CN-XiaoxiaoDialectsNeural",
+        "zh-CN-XiaoxiaoMultilingualNeural",
         "zh-CN-XiaoxiaoNeural",
-        "zh-CN-XiaoxuanNeural",
         "zh-CN-XiaoyanNeural",
         "zh-CN-XiaoyiNeural",
         "zh-CN-XiaoyouNeural",
+        "zh-CN-XiaoyuMultilingualNeural",
         "zh-CN-XiaozhenNeural",
         "zh-CN-YunfengNeural",
         "zh-CN-YunhaoNeural",
         "zh-CN-YunjianNeural",
+        "zh-CN-YunjieNeural",
         "zh-CN-YunxiNeural",
         "zh-CN-YunxiaNeural",
         "zh-CN-YunyangNeural",
         "zh-CN-YunyeNeural",
+        "zh-CN-YunyiMultilingualNeural",
         "zh-CN-YunzeNeural",
+        "zh-CN-guangxi-YunqiNeural",
         "zh-CN-henan-YundengNeural",
         "zh-CN-liaoning-XiaobeiNeural",
+        "zh-CN-liaoning-YunbiaoNeural",
         "zh-CN-shaanxi-XiaoniNeural",
         "zh-CN-shandong-YunxiangNeural",
         "zh-CN-sichuan-YunxiNeural",
@@ -497,16 +547,69 @@ class AzureTTS(TTSBase):
         "zu-ZA-ThandoNeural",
         "zu-ZA-ThembaNeural",
     ]
-    VOICES = list(set(CHINESE_CANTONESE + KOREAN + ENGLISH + CZECH + ALL))
+    MULTILINGUAL_VOICES = [
+        "de-DE-FlorianMultilingualNeural",
+        "de-DE-SeraphinaMultilingualNeural",
+        "en-GB-AdaMultilingualNeural",
+        "en-GB-OllieMultilingualNeural",
+        "en-US-AdamMultilingualNeural",
+        "en-US-AlloyTurboMultilingualNeural",
+        "en-US-AmandaMultilingualNeural",
+        "en-US-AndrewMultilingualNeural",
+        "en-US-AvaMultilingualNeural",
+        "en-US-BrandonMultilingualNeural",
+        "en-US-BrianMultilingualNeural",
+        "en-US-ChristopherMultilingualNeural",
+        "en-US-CoraMultilingualNeural",
+        "en-US-DavisMultilingualNeural",
+        "en-US-DerekMultilingualNeural",
+        "en-US-DustinMultilingualNeural",
+        "en-US-EchoTurboMultilingualNeural",
+        "en-US-EmmaMultilingualNeural",
+        "en-US-EvelynMultilingualNeural",
+        "en-US-FableTurboMultilingualNeural",
+        "en-US-LewisMultilingualNeural",
+        "en-US-LolaMultilingualNeural",
+        "en-US-NancyMultilingualNeural",
+        "en-US-NovaTurboMultilingualNeural",
+        "en-US-OnyxTurboMultilingualNeural",
+        "en-US-PhoebeMultilingualNeural",
+        "en-US-SamuelMultilingualNeural",
+        "en-US-SerenaMultilingualNeural",
+        "en-US-ShimmerTurboMultilingualNeural",
+        "en-US-SteffanMultilingualNeural",
+        "es-ES-ArabellaMultilingualNeural",
+        "es-ES-IsidoraMultilingualNeural",
+        "es-ES-TristanMultilingualNeural",
+        "es-ES-XimenaMultilingualNeural",
+        "fr-FR-LucienMultilingualNeural",
+        "fr-FR-RemyMultilingualNeural",
+        "fr-FR-VivienneMultilingualNeural",
+        "it-IT-AlessioMultilingualNeural",
+        "it-IT-GiuseppeMultilingualNeural",
+        "it-IT-IsabellaMultilingualNeural",
+        "it-IT-MarcelloMultilingualNeural",
+        "ja-JP-MasaruMultilingualNeural",
+        "ko-KR-HyunsuMultilingualNeural",
+        "pt-BR-MacerioMultilingualNeural",
+        "pt-BR-ThalitaMultilingualNeural",
+        "zh-CN-XiaochenMultilingualNeural",
+        "zh-CN-XiaoxiaoMultilingualNeural",
+        "zh-CN-XiaoyuMultilingualNeural",
+        "zh-CN-YunfanMultilingualNeural",
+        "zh-CN-YunxiaoMultilingualNeural",
+        "zh-CN-YunyiMultilingualNeural",
+    ]
+    ALL += MULTILINGUAL_VOICES
+    VOICES = list(set(ALL))
     AZURE_SPEECH_KEY = os.environ.get("AZURE_SPEECH_KEY")
     AZURE_SERVICE_REGION = os.environ.get("AZURE_SERVICE_REGION")
 
     def __init__(self, voice, ssml=False):
         super(AzureTTS, self).__init__()
         self.voice = voice
-        self.voice_id = "azure:%s" % self.voice
         self.ssml = ssml
-        self.parser = ActionParser("azure")
+        self.parser = ActionParser(self.VENDOR)
 
     def wrap_speak_tag(self, text):
         """Wrap text in <speak></speak> to be legal SSML"""
@@ -670,11 +773,11 @@ def load_voices():
             continue
         try:
             api = AzureTTS(voice=voice, ssml=True)
-            voices["azure"][voice] = api
+            voices[AzureTTS.VENDOR][voice] = api
         except Exception as ex:
             logger.exception(ex)
             break
-    logger.info("Added voices: %s" % ", ".join(list(voices["azure"].keys())))
+    logger.info("Added voices: %s" % ", ".join(list(voices[AzureTTS.VENDOR].keys())))
     return voices
 
 
