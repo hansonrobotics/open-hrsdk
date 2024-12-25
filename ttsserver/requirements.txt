@@ -1,4 +1,4 @@
-azure-cognitiveservices-speech==1.17.0
+azure-cognitiveservices-speech>=1.17.0,<2
 boto3
 bs4
 coloredlogs
@@ -12,6 +12,7 @@ pyyaml
 requests
 scipy
 sox>=1.2.9
+typing_extensions
 urllib3>1.25.4
 websocket-client==1.2.1
 elevenlabs>=1.13.3,<2

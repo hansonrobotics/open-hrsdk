@@ -111,7 +111,10 @@ class TTSData:
         self.raw_nodes = []
 
     def get_duration(self):
-        return get_duration(self.wavout)
+        if os.path.exists(self.wavout):
+            return get_duration(self.wavout)
+        else:
+            return 0.0
 
     def get_nodes(self):
         typeorder = {"marker": 1, "word": 2, "phoneme": 3}
@@ -209,6 +212,12 @@ class TTSBase(object):
         timing_cache_file = os.path.join(self.cache_dir, "%s.timing" % tts_data.id)
         if not os.path.exists(audio_file_cache) or not os.path.exists(
             timing_cache_file
+        ):
+            return False
+        # check if cached files are empty
+        if (
+            os.path.getsize(audio_file_cache) == 0
+            or os.path.getsize(timing_cache_file) == 0
         ):
             return False
         logger.info("Audio cache %r", audio_file_cache)

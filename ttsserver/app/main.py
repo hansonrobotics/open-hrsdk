@@ -131,7 +131,7 @@ def _tts(vendor):
         try:
             tts_data = api.tts(text, **params)
         except Exception as ex:
-            logger.exception(ex)
+            logger.exception("Error in running tts for text %s: %s", text, ex)
             tts_data = None
             response["error"] = str(ex)
         if tts_data is None:
@@ -171,8 +171,9 @@ def _tts(vendor):
                     else:
                         raise Exception("Audio file %s doesn't exist", filepath)
             response["duration"] = tts_data.get_duration()
+            response["data"] = ""
 
-            if tts_data.wavout:
+            if tts_data.wavout and os.path.exists(tts_data.wavout):
                 try:
                     with open(tts_data.wavout, "rb") as f:
                         raw = f.read()

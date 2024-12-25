@@ -15,13 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-import json
 import logging
 import os
 import shutil
 import tempfile
 import wave
 from collections import defaultdict
+from functools import partial
 
 import azure.cognitiveservices.speech as speechsdk
 import numpy as np
@@ -621,31 +621,29 @@ class AzureTTS(TTSBase):
 </speak>"""
         return text
 
-    def word_boundary_event_callback(self, event):
-        text = self.tts_data.text[
-            event.text_offset : event.text_offset + event.word_length
-        ]
+    def word_boundary_event_callback(self, tts_data, event):
+        text = tts_data.text[event.text_offset : event.text_offset + event.word_length]
         node = {"type": "word"}
         node["time"] = event.audio_offset / 1e4
         node["value"] = text
         node["start"] = event.text_offset
         node["end"] = event.text_offset + event.word_length
-        self.tts_data.raw_nodes.append(node)
+        tts_data.raw_nodes.append(node)
         logger.debug("Word event received: %s", node)
 
-    def viseme_event_callback(self, event):
+    def viseme_event_callback(self, tts_data, event):
         """audio_offset: The start time of each viseme, in ticks (100 nanoseconds)."""
         node = {"type": "viseme"}
         node["time"] = event.audio_offset / 1e4  # in millisecond
         node["value"] = str(event.viseme_id)
-        self.tts_data.raw_nodes.append(node)
+        tts_data.raw_nodes.append(node)
         logger.debug("Viseme event received: %s", node)
 
-    def bookmark_reached_event_callback(self, event):
+    def bookmark_reached_event_callback(self, tts_data, event):
         node = {"type": "ssml"}
         node["time"] = event.audio_offset / 1e4
         node["value"] = event.text
-        self.tts_data.raw_nodes.append(node)
+        tts_data.raw_nodes.append(node)
         logger.debug("Bookmark event received: %s", node)
 
     def online_tts(self, tts_data):
@@ -681,11 +679,13 @@ class AzureTTS(TTSBase):
             # Subscribes to word boundary event
             # The unit of evt.audio_offset is tick (1 tick = 100 nanoseconds), divide it by 10,000 to convert to milliseconds.
             speech_synthesizer.synthesis_word_boundary.connect(
-                self.word_boundary_event_callback
+                partial(self.word_boundary_event_callback, tts_data)
             )
-            speech_synthesizer.viseme_received.connect(self.viseme_event_callback)
+            speech_synthesizer.viseme_received.connect(
+                partial(self.viseme_event_callback, tts_data)
+            )
             speech_synthesizer.bookmark_reached.connect(
-                self.bookmark_reached_event_callback
+                partial(self.bookmark_reached_event_callback, tts_data)
             )
 
             # Receives a text from console input and synthesizes it to result.
@@ -720,8 +720,8 @@ class AzureTTS(TTSBase):
                         )
                     )
 
-    def align_timing(self):
-        spf = wave.open(self.tts_data.wavout, "r")
+    def align_timing(self, tts_data):
+        spf = wave.open(tts_data.wavout, "r")
         signal = spf.readframes(-1)
         signal = np.fromstring(signal, np.int16)
 
@@ -732,7 +732,7 @@ class AzureTTS(TTSBase):
         max_audio_duration = Time[max_index]
         spf.close()
 
-        nodes = [node for node in self.tts_data.raw_nodes if node["type"] == "viseme"]
+        nodes = [node for node in tts_data.raw_nodes if node["type"] == "viseme"]
         if nodes:
             logger.debug("Before alignment: %s", nodes)
             nodes_duration = nodes[-1]["time"] / 1000.0
@@ -741,7 +741,7 @@ class AzureTTS(TTSBase):
                 node["time"] = node["time"] * ratio
             logger.debug("After alignment: %s", nodes)
 
-    def do_tts(self, tts_data):
+    def do_tts(self, tts_data, cache_enabled=True):
         # parse action
         backup = tts_data.text
         try:
@@ -751,19 +751,16 @@ class AzureTTS(TTSBase):
             logger.exception(ex)
         tts_data.text = text
 
-        self.tts_data = tts_data
-        loaded = self.load_from_cache(self.tts_data)
+        loaded = self.load_from_cache(tts_data) if cache_enabled else False
         if not loaded:
-            self.online_tts(self.tts_data)
+            self.online_tts(tts_data)
 
-            # audio_duration = self.tts_data.get_duration()
-            # if audio_duration > 0:
-            #    self.align_timing()
             tts_data.phonemes = self.get_phonemes(tts_data.raw_nodes)
             tts_data.markers = self.get_markers(tts_data.raw_nodes)
             tts_data.words = self.get_words(tts_data.raw_nodes)
-            self.save_to_cache(self.tts_data)
-            logger.info("Saved to cache")
+            if cache_enabled:
+                self.save_to_cache(tts_data)
+                logger.info("Saved to cache")
 
 
 def load_voices():

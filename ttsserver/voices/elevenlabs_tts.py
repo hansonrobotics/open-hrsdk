@@ -17,13 +17,12 @@
 #
 
 import concurrent.futures
+import copy
 import logging
 import os
 import shutil
 import subprocess
 import tempfile
-from collections import defaultdict
-from typing import Optional
 
 from elevenlabs import VoiceSettings
 from elevenlabs.client import ElevenLabs
@@ -78,6 +77,9 @@ class ElevenLabsVoice(AzureTTS):
         except Exception as ex:
             text = tts_data.text
             logger.exception(ex)
+        if not text:
+            logger.warning("No text to synthesize")
+            return
         tts_data.text = text
 
         loaded = self.load_from_cache(tts_data)
@@ -88,9 +90,16 @@ class ElevenLabsVoice(AzureTTS):
             # Start Azure TTS to get timing info and ElevenLabs synthesis in parallel
             # Get timing info from Azure, and synthesize audio with ElevenLabs
             with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-                azure_future = executor.submit(super().do_tts, tts_data)
+                tts_data_copy = copy.deepcopy(tts_data)
+                azure_future = executor.submit(
+                    super().do_tts, tts_data_copy, cache_enabled=False
+                )
                 elevenlabs_future = executor.submit(self.synthesize, text)
                 azure_future.result()
+                logger.info("Azure phonemes: %s", len(tts_data_copy.phonemes))
+                tts_data.phonemes = tts_data_copy.phonemes
+                tts_data.markers = tts_data_copy.markers
+                tts_data.words = tts_data_copy.words
                 audio_content = elevenlabs_future.result()
 
             if audio_content is None:
@@ -113,18 +122,23 @@ class ElevenLabsVoice(AzureTTS):
                     raise ValueError(f"Unsupported format: {tts_data.format}")
 
             # Adjust the phonemes timing to match the ElevenLabs audio length
-            phoneme_duration = max([phoneme["end"] for phoneme in tts_data.phonemes])
-            audio_duration = tts_data.get_duration()
-            logger.info(
-                "Adjusting phonemes timing from %s to %s",
-                phoneme_duration,
-                audio_duration,
-            )
-            self._adjust_phonemes_timing(
-                tts_data.phonemes,
-                audio_duration / phoneme_duration,
-                -0.1,  # send visemes 0.1 second earlier so it matches the audio
-            )
+            if tts_data.phonemes:
+                phoneme_duration = max(
+                    [phoneme["end"] for phoneme in tts_data.phonemes]
+                )
+                audio_duration = tts_data.get_duration()
+                logger.info(
+                    "Adjusting phonemes timing from %s to %s",
+                    phoneme_duration,
+                    audio_duration,
+                )
+                self._adjust_phonemes_timing(
+                    tts_data.phonemes,
+                    audio_duration / phoneme_duration,
+                    -0.1,  # send visemes 0.1 second earlier so it matches the audio
+                )
+            else:
+                logger.error("No phonemes found in %s", tts_data.text)
 
             self.save_to_cache(tts_data)
 
