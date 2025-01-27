@@ -1,4 +1,6 @@
 # Read the Docs configuration file
+# Template Copyright (c) 2010-2024 Read the Docs, Inc & contributors
+# MIT License - https://github.com/readthedocs/readthedocs.org/blob/main/LICENSE
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
 # Required
