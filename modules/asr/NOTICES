@@ -1,0 +1,30 @@
+NOTICES
+================================================================================
+This project includes third-party content licensed under terms compatible with
+the GNU General Public License v3.0 (GPLv3). Below is a summary of these
+third-party components and their license notices.
+
+--------------------------------------------------------------------------------
+1) Google Cloud Speech Code - Apache License, Version 2.0
+   Portions of this project derive from “Cloud Speech-to-Text” code originally
+   published by Google Inc. under the Apache License, Version 2.0. Refer to:
+   https://cloud.google.com/speech-to-text
+
+--------------------------------------------------------------------------------
+2) Endolith - MIT License
+   audio_sensor.py contains code by endolith (2016, endolith@gmail.com)
+   Licensed under MIT:
+   https://opensource.org/license/MIT
+
+--------------------------------------------------------------------------------
+3) webrtcvad - BSD License
+   This project uses webrtcvad (https://github.com/wiseman/py-webrtcvad) under
+   the following 3-Clause BSD License:
+   https://github.com/wiseman/py-webrtcvad?tab=License-1-ov-file
+
+--------------------------------------------------------------------------------
+4) PyAudio - MIT License
+   PyAudio is MIT-licensed. See:
+   https://people.csail.mit.edu/hubert/pyaudio/
+   for the full text.
+================================================================================
