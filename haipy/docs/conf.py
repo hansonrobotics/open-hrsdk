@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of Sphinx documentation builder.
-# Copyright (c) 2007-2024 by the Sphinx team.
+# Copyright (c) 2007-2025 by the Sphinx team.
 # BSD licensed, see LICENSE for details.
 
 # This file is execfile()d with the current directory set to its containing dir.
