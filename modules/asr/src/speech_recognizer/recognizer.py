@@ -14,6 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
+# Portions of this file were originally derived from Google’s Cloud Speech-to-Text
+# reference code licensed under Apache License, Version 2.0. See NOTICES file.
+#
 
 import logging
 
