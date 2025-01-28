@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ##
 ## Copyright (C) 2017-2025 Hanson Robotics
 ##
