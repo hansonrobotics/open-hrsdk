@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     <version>0.4.0</version>
     <description>The Hanson Robotics Speech Recognition package</description>
 
-    <license>Copyright (c) 2020, Hanson Robotics</license>
+    <license>Copyright (c) 2017-2025, Hanson Robotics</license>
     <maintainer email="wenwei@hansonrobotics.com">Wenwei Huang</maintainer>
     <maintainer email="vytas@hansonrobotics.com">Vytas Krisciunas</maintainer>
     <author email="wenwei@hansonrobotics.com">Wenwei Huang</author>
