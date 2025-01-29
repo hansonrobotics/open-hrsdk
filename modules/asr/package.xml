@@ -18,9 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 <package format="2">
     <name>asr</name>
     <version>0.4.0</version>
-    <description>The Hanson Robotics Speech Recognition package</description>
+    <description>The Hanson Robotics Speech Recognition package. See NOTICES file for more details.</description>
 
-    <license>Copyright (c) 2017-2025, Hanson Robotics</license>
+    <license>GPLv3</license>
     <maintainer email="wenwei@hansonrobotics.com">Wenwei Huang</maintainer>
     <maintainer email="vytas@hansonrobotics.com">Vytas Krisciunas</maintainer>
     <author email="wenwei@hansonrobotics.com">Wenwei Huang</author>
