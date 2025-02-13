@@ -1,0 +1,83 @@
+# Third-Party Software Licenses
+
+This project includes or depends upon the following third-party software:
+
+## Python Package Dependencies
+
+### MIT License
+- airtable-python-wrapper (0.15.2)
+- openai (>=1.3)
+- langchain
+- langchain-community (>=0.0.27)
+- langchain-mongodb
+- langchain-openai
+- pydantic (>=2.0.0,<3.0.0)
+- python-benedict (>=0.24.1)
+- python-jose (>=3.3.0)
+- SQLAlchemy (>=1.3.18)
+- Jinja2 (>=3.0.3,<4.0)
+- openpyxl (>=3.0.7,<4.0)
+- python-slugify (>=5.0.2)
+- websocket-client (1.2.1)
+- elevenlabs (>=1.13.3,<2)
+
+### Apache License 2.0
+- boto3 (>=1.24)
+- aiohttp (>=3.8,<4.0)
+- pymongo
+- google-cloud-translate (>=1.3.1,<2.0)
+- azure-cognitiveservices-speech (>=1.17.0,<2)
+
+### BSD 3-Clause License
+- redis (>=4.4.2,<5.0)
+- pandas (>=1.2.5,<2.0)
+- scipy
+- numpy
+
+### Python Software Foundation License
+- typing_extensions
+
+### BSD 2-Clause License
+- pinyin (0.2.5)
+
+### LGPL License
+- lxml
+
+### Other Licenses
+- PyYAML (MIT License)
+- requests (Apache 2.0)
+- coloredlogs (MIT License)
+- babel (BSD 3-Clause)
+- aioredis (MIT License)
+- bunnet (MIT License)
+- python-dotenv (BSD 3-Clause)
+- pydub (MIT License)
+- sox (>=1.2.9) (GPL-compatible)
+
+## Development Dependencies
+
+### MIT License
+- black (24.2.0)
+- pre-commit-hooks (v4.5.0)
+- isort (5.13.2)
+
+### BSD License
+- Sphinx (>=3.2.1)
+
+## Notes
+
+1. All listed dependencies are compatible with GPL v3.0 license.
+2. This list is maintained as part of the project documentation and should be updated when dependencies change.
+3. For detailed license texts, please refer to the respective projects' repositories or documentation.
+4. Some packages may have additional dependencies with their own licenses. This list covers direct dependencies only.
+
+## License Texts
+
+The full text of the GNU General Public License Version 3 can be found in the LICENSE file.
+
+For the full license text of any of the dependencies listed above, please refer to:
+- MIT License: https://opensource.org/licenses/MIT
+- Apache License 2.0: https://opensource.org/licenses/Apache-2.0
+- BSD 3-Clause License: https://opensource.org/licenses/BSD-3-Clause
+- BSD 2-Clause License: https://opensource.org/licenses/BSD-2-Clause
+- LGPL License: https://www.gnu.org/licenses/lgpl-3.0.en.html 
