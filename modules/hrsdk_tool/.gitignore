@@ -1,0 +1,11 @@
+*.deb
+.vscode
+*.swp
+*.swo
+docker-compose
+*.dump
+
+# Ignore all credential files
+.credentials/*
+!.credentials/README.md
+!.credentials/templates/

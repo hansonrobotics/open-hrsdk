@@ -1,0 +1,12 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: YOUR_CERTIFICATE_AUTHORITY_DATA
+    server: YOUR_KUBERNETES_SERVER_URL
+  name: YOUR_CLUSTER_NAME
+contexts:
+- context:
+    cluster: YOUR_CLUSTER_NAME
+  name: YOUR_CLUSTER_NAME
+current-context: YOUR_CLUSTER_NAME
+kind: Config
