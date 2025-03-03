@@ -72,7 +72,7 @@ RUN /opt/hansonrobotics/py3env/bin/python -m pip install \
     "elevenlabs>=1.13.3,<2"
 
 WORKDIR /ttsserver
-COPY --from=open-hrsdk /open-hrsdk/ttsserver /ttsserver
+COPY --from=open-hrsdk /open-hrsdk/modules/ttsserver /ttsserver
 
 RUN /opt/hansonrobotics/py3env/bin/python setup.py install
 
