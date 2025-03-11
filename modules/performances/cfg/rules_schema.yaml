@@ -1,0 +1,292 @@
+##
+## Copyright (C) 2017-2025 Hanson Robotics
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program.  If not, see <https://www.gnu.org/licenses/>.
+##
+
+keyword_rules_ui:
+  type: array
+  format: table
+  items:
+    type: object
+    properties:
+      keywords:
+        title: 'Keywords'
+        propertyOrder: 1
+        type: string
+      priority:
+        title: 'Priority'
+        propertyOrder: 2
+        type: number
+        default: 50
+      probability:
+        title: 'Probability'
+        propertyOrder: 3
+        type: number
+        default: 0.5
+      headAA:
+        title: 'head AA'
+        propertyOrder: 4
+        type: string
+        default: "-"
+        enum:
+          - "-"
+          - "nod-short"
+          - "head-shake"
+          - "look-up"
+          - "look-away"
+          - "head-tilt"
+      browAA:
+        title: 'Brow AA'
+        propertyOrder: 5
+        type: string
+        default: "-"
+        enum:
+          - "-"
+          - "brows-up"
+          - "brows-down"
+          - "brow-center-up"
+      eyesAA:
+        title: 'Eyes AA'
+        propertyOrder: 6
+        type: string
+        default: "-"
+        enum:
+          - "-"
+          - "eyes-away"
+          - "eyes-up"
+      armsAA:
+        title: 'Arms AA'
+        propertyOrder: 7
+        type: string
+        default: "-"
+        enum:
+          - "-"
+          - "arm_unsure"
+          - "arm_beat"
+          - "arm_me"
+          - "arm_you"
+          - "arm_many"
+          - "arm_vawe"
+          - "arm_point"
+          - "arm_greeting"
+          - "arm_heart"
+          - "arm_frame_small"
+          - "arm_frame_big"
+          - "arm_compare_smaller"
+          - "arm_compare_bigger"
+          - "arm_contrast"
+          - "arm_offer"
+          - "arm_process"
+          - "arm_reject"
+da_rules:
+  type: array
+  format: table
+  items:
+    type: object
+    properties:
+      act:
+        title: 'Dialog Act'
+        propertyOrder: 1
+        type: string
+        default: "-"
+        enum:
+          - "STATEMENT_NON_OPINION"
+          - "ACKNOWLEDGE"
+          - "STATEMENT_OPINION"
+          - "AGREE"
+          - "ABANDONED"
+          - "APPRECIATION"
+          - "YES_NO_QUESTION"
+          - "NON_VERBAL"
+          - "YES_ANSWER"
+          - "CONVENTIONAL_CLOSING"
+          - "UNINTERPRETABLE"
+          - "WH_QUESTION"
+          - "NO_ANSWER"
+          - "RESPONSE_ACKNOWLEDGEMENT"
+          - "HEDGE"
+          - "DECLARATIVE_YES_NO_QUESTION"
+          - "OTHER"
+          - "BLACKCHANNEL_IN_QUESTION_FORM"
+          - "QUOTATION"
+          - "SUMMARIZE"
+          - "AFFIRMATIVE_NON_YES_ANSWER"
+          - "ACTION_DIRECTIVE"
+          - "COLLABORATIVE_COMPLETION"
+          - "REPEAT_PHRASE"
+          - "OPEN_QUESTION"
+          - "RHETORICAL_QUESTIONS"
+          - "HOLD_BEFORE_ANSWER"
+          - "REJECT"
+          - "NEGATIVE_NON_NO_ANSWER"
+          - "SIGNAL_NON_UNDERSTANDING"
+          - "OTHER_ANSWER"
+          - "CONVENTIONAL_OPENING"
+          - "OR_CLAUSE"
+          - "DISPREFERRED_ANSWER"
+          - "THIRD_PARTY_TALK"
+          - "OFFER"
+          - "SELF_TALK"
+          - "DOWNPLAYER"
+          - "MAYBE"
+          - "TAG_QUESTION"
+          - "DECLARATIVE_WH_QUESTION"
+          - "APOLOGY"
+          - "THANKING"
+      threshold:
+        title: 'Threshold'
+        propertyOrder: 2
+        type: number
+        default: 0.5
+      priority:
+        title: 'Priority'
+        propertyOrder: 3
+        type: number
+        default: 50
+      probability:
+        title: 'Probability'
+        propertyOrder: 4
+        type: number
+        default: 0.5
+      headAA:
+        title: 'head AA'
+        propertyOrder: 5
+        type: string
+        default: "-"
+        enum:
+          - "-"
+          - "head-up"
+          - "head-down"
+          - "head-down"
+          - "head-left"
+          - "head-right"
+          - "head-tilt"
+          - "head-tilt-long"
+          - "nod-short"
+          - "nod-long"
+          - "nod-heavy"
+          - "shake-short"
+          - "shake-long"
+          - "shake-firmly"
+          - "shake-heavy"
+          - "wobbling"
+      browAA:
+        title: 'Brow AA'
+        propertyOrder: 6
+        type: string
+        default: "-"
+        enum:
+          - "-"
+          - "brow-up-short"
+          - "brow-up-normal"
+          - "brow-up-long"
+          - "brow-up-normal"
+          - "brow-up-long"
+          - "brow-center-up"
+          - "brow-center-up-long"
+          - "brow-down-short"
+          - "brow-down-normal"
+          - "brow-down-long"
+          - "brow-doubt"
+          - "brow-doubt-long"
+      eyelidsAA:
+        title: 'EyeLids AA'
+        propertyOrder: 7
+        type: string
+        default: "-"
+        enum:
+          - "-"
+          - "eyelid-half-close"
+          - "eyelid-widely-open"
+      eyesAA:
+        title: 'Eyes AA'
+        propertyOrder: 7
+        type: string
+        default: "-"
+        enum:
+          - "-"
+          - "eye-left"
+          - "eye-right"
+          - "eye-up"
+          - "eye-down"
+          - "eye-around"
+          - "eye-corner"
+          - "eye-side"
+      armsAA:
+        title: 'Arms AA'
+        propertyOrder: 8
+        type: string
+        default: "-"
+        enum:
+          - "-"
+          - "arm-unsure"
+          - "arm-enjoy"
+          - "arm-beat"
+          - "arm-me"
+          - "arm-you"
+          - "arm-many"
+          - "arm-vawe"
+          - "arm-point"
+          - "arm-greeting"
+          - "arm-call"
+          - "arm-heart"
+          - "arm-frame-small"
+          - "arm-frame-big"
+          - "arm-compare-smaller"
+          - "arm-compare-bigger"
+          - "arm-contrast"
+          - "arm-offer"
+          - "arm-process-control"
+          - "arm-rejection"
+          - "arm-rolling"
+          - "arm-notkown"
+          - "arm-peace"
+          - "arm-stop"
+          - "arm-round"
+          - "arm-different"
+      apply:
+        title: "Which word of sentence to select"
+        type: string
+        propertyOrder: 9
+        default: "random"
+        enum:
+          - "random"
+          - "first"
+          - "last"
+other_rules:
+  type: array
+  format: table
+  items:
+    type: object
+    properties:
+      keywords:
+        title: 'Rule Desc'
+        propertyOrder: 1
+        type: string
+        default: "-"
+        enum:
+          - "Stress words based on impoortance"
+          - "Keep alive animations"
+          - "Emphasize question ending"
+      priority:
+        title: 'Priority'
+        propertyOrder: 2
+        type: number
+        default: 50
+      probability:
+        title: 'Probability'
+        propertyOrder: 3
+        type: number
+        default: 0.5
