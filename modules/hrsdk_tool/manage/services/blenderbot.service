@@ -1,0 +1,14 @@
+[Unit]
+Description=Hanson AI Chatbot Service
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/bin/bash /usr/bin/hrsdk start --service blenderbot --project bg
+
+[Install]
+WantedBy=multi-user.target
+
