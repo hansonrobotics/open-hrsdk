@@ -18,9 +18,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 <package>
   <name>audio_stream</name>
   <version>0.4.0</version>
-  <description>The audio_stream package</description>
+  <description>The Hanson Robotics audio_stream package</description>
 
-    <license>Copyright (c) 2020, Hanson Robotics</license>
+    <license>GPLv3</license>
     <maintainer email="wenwei@hansonrobotics.com">Wenwei Huang</maintainer>
 
     <author email="vytas@hansonrobotics.com">Vytas Krisciunas</author>
