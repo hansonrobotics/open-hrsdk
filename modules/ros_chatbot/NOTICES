@@ -1,0 +1,48 @@
+NOTICES
+================================================================================
+This project includes third-party content licensed under terms compatible with
+the GNU General Public License v3.0 (GPLv3). Below is a summary of these
+third-party components and their license notices.
+
+--------------------------------------------------------------------------------
+1) PyAIML - BSD 2-Clause License
+   Files in src/ros_chatbot/pyaiml/ directory are derived from PyAIML originally
+   created by Cort Stratton and modified by Hanson Robotics.
+   
+   Copyright 2003-2010 Cort Stratton. All rights reserved.
+   Copyright 2015, 2016 Hanson Robotics
+   
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+   1. Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+   2. Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+   
+   THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+   WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+   EVENT SHALL THE FREEBSD PROJECT OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+   INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+   (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+--------------------------------------------------------------------------------
+2) BM25 Implementation - GNU Lesser General Public License v2.1
+   The file src/ros_chatbot/bm25.py is derived from code originally published
+   under the GNU LGPL v2.1.
+   
+   Licensed under the GNU LGPL v2.1 - http://www.gnu.org/licenses/lgpl.html
+   
+   This module contains function of computing rank scores for documents in
+   corpus and helper class `BM25` used in calculations. Original algorithm
+   described in:
+   - Robertson, Stephen; Zaragoza, Hugo (2009). The Probabilistic Relevance
+     Framework: BM25 and Beyond,
+     http://www.staff.city.ac.uk/~sb317/papers/foundations_bm25_review.pdf
+   - Okapi BM25 on Wikipedia, https://en.wikipedia.org/wiki/Okapi_BM25
+   

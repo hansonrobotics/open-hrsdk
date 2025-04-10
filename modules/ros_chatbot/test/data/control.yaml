@@ -1,0 +1,104 @@
+##
+## Copyright (C) 2017-2025 Hanson Robotics
+##
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with this program.  If not, see <https://www.gnu.org/licenses/>.
+##
+
+controllers:
+  - id: placeholder_utterance_controller
+    config:
+      enabled: true
+      prob_escalate_step: 1 # time based, when pass issue an utterance (escalate every 1/2 second)
+      speaking_prob_decay_step: 0.1  # turn based, when pass assume user talking to robot
+      speaking_initial_prob: 0.5 # initial prob of user talking to robot without cue
+      utterances:
+        en-US:
+        - "Oh"
+        - "Ahh, well"
+        - "Let's see"
+        - "Ahh"
+        - "Well"
+        - "Huh"
+        - "Uh"
+        - "Om"
+        - "Ha"
+        - "Erm"
+        - "Like, hmm .."
+        - "Like, hum .."
+        - "Hmm"
+        - "Hum"
+        - "Oh, right"
+        - "Aha"
+        - "Got it"
+        - "Got it, hmm"
+        - "Hold on"
+        - "Let me think"
+        - "I don't know"
+        - "I know, right?"
+        - "|vocal, err|"
+        - "|vocal, yeah resigned|"
+        - "|vocal, yeah question| I see"
+        - "|vocal, hmm thinking|"
+        - "|vocal, hmm yes|"
+        - "|vocal, err| well"
+        - "|vocal, err| let's see"
+        - "Like |vocal, hmm thinking|"
+        - "Oh, right"
+        - "|vocal, yeah question| Got it"
+        - "Let me think |vocal, hmm thinking|"
+  - id: active_listening
+    config:
+      prob_escalate_step: 0.01
+      utterances:
+        en-US:
+        - Oh
+        - I hear you
+        - Well
+  - id: language_switch_controller
+    config:
+      target_language_code:
+        English: en-US
+        Chinese: cmn-Hans-CN
+        英文: en-US
+        英语: en-US
+        中文: cmn-Hans-CN
+        普通话: cmn-Hans-CN
+      language_switch_response:
+        en-US: OK let's talk in English
+        cmn-Hans-CN: 好的，我们说中文
+  - id: responsivity_controller
+    config:
+      enabled: true
+      wakeup:
+        regular_expressions:
+        - ".* sophia$"
+        - "^sophia .*"
+      full_stop:
+        intents: system/user/interrupt
+        keywords:
+        - be quiet sophia
+      resposibility_decay: 0
+  - id: interruption_controller
+    config:
+      soft_interruption:
+        max_input_words: 3
+        keywords:
+          - "soft keywords"
+      short_pause_interruption:
+        max_input_words: 3
+        keywords:
+          - "short keywords"
+      long_input_interruption:
+        min_input_words: 7
+

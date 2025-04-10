@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+Copyright (C) 2017-2025 Hanson Robotics
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<package format="2">
+  <name>ros_chatbot</name>
+  <version>0.7.0</version>
+  <description>The Hanson Robotics ros_chatbot package</description>
+  <license>GPLv3</license>
+  <maintainer email="wenwei@hansonrobotics.com">Wenwei Huang</maintainer>
+  <maintainer email="vytas@hansonrobotics.com">Vytas Krisciunas</maintainer>
+  <author email="wenwei@hansonrobotics.com">Wenwei Huang</author>
+  <author email="vytas@hansonrobotics.com">Vytas Krisciunas</author>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>dynamic_reconfigure</build_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
